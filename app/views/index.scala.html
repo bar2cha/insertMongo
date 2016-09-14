@@ -1,20 +1,33 @@
-@*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
-@(message: String)
+@(tasks: List[Task], taskForm: Form[String])
 
-@*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
-@main("Welcome to Play") {
+@import helper._
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     *@
-    @play20.welcome(message, style = "Scala")
+@main("Todo list") {
+
+    <h1>@tasks.size task(s)</h1>
+
+    <ul>
+        @tasks.map { task =>
+            <li>
+                @task.label
+
+                @form(routes.Application.deleteTask(task.id)) {
+                    <input type="submit" value="Delete">
+                }
+            </li>
+        }
+    </ul>
+
+    <h2>Add a new task</h2>
+
+    @form(routes.Application.newTask) {
+
+        @inputText(taskForm("label"))
+
+        <input type="submit" value="Create">
+
+    }
 
 }

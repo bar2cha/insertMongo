@@ -3,6 +3,8 @@ package controllers
 import javax.inject._
 import play.api._
 import play.api.mvc._
+import play.api.data._
+import play.api.data.Forms._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -10,6 +12,10 @@ import play.api.mvc._
  */
 @Singleton
 class Application @Inject() extends Controller {
+
+  val taskForm = Form(
+    "label" -> nonEmptyText
+  )
 
   /**
    * Create an Action to render an HTML page with a welcome message.
