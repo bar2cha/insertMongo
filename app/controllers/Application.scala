@@ -6,6 +6,8 @@ import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
 
+import models.Task
+
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
@@ -25,10 +27,13 @@ class Application @Inject() extends Controller {
    */
   def index = Action {
     //Ok(views.html.index("Your new application is ready."))
-    Ok(("Your new application is ready."))
+    //Ok(("Your new application is ready."))
+    Redirect(routes.Application.tasks)
   }
 
-  def tasks = TODO
+  def tasks = Action {
+    Ok(views.html.index(Task.all(), taskForm))
+  }
 
   def newTask = TODO
 
